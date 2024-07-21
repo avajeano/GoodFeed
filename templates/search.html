@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}Search{% endblock %}
+{% block content %}
+
+<form action="/search" method="POST">
+    
+    {{ form.hidden_tag() }}
+    {{ form.csrf_token }}
+
+    {% for field in form if field.widget.input_type != 'hidden' %}
+
+    <p>
+        {{ field.label }}
+        {{ field(class_form="form-control") }}
+    </p>
+    {% endfor %}
+
+    <button class="btn btn-success" type="submit">Search</button>
+    
+</form>
+
+<div class="container">
+    {% if restaurants %}
+    <div class="row justify-content-center mb-3">
+        {% for restaurant in restaurants %}
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" action="/users/add_bookmark">
+                        <!-- {{ form.hidden_tag() }}
+                        {{ form.csrf_token }} -->
+                        <input type="hidden" name="name" value="{{ restaurant.name }}">
+                        <input type="hidden" name="cuisine" value="{{ restaurant.cuisine }}">
+                        <input type="hidden" name="boro" value="{{ restaurant.boro }}">
+                        <input type="hidden" name="building_number" value="{{ restaurant.building_number }}">
+                        <input type="hidden" name="street" value="{{ restaurant.street }}">
+                        <input type="hidden" name="zipcode" value="{{ restaurant.zipcode }}">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-secondary btn-lg bookmark-btn">
+                                {% if restaurant.id in bookmarked_restaurants %}
+                                    <i class="fa-solid fa-bookmark"></i>
+                                {% else %}
+                                    <i class="fa-regular fa-bookmark"></i>
+                                {% endif %}
+                            </button>
+                        </div>
+                    </form>
+                    <form method="POST" action="/restaurant/review">
+                        <input type="hidden" name="name" value="{{ restaurant.name }}">
+                        <input type="hidden" name="cuisine" value="{{ restaurant.cuisine }}">
+                        <input type="hidden" name="boro" value="{{ restaurant.boro }}">
+                        <input type="hidden" name="building_number" value="{{ restaurant.building_number }}">
+                        <input type="hidden" name="street" value="{{ restaurant.street }}">
+                        <input type="hidden" name="zipcode" value="{{ restaurant.zipcode }}">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-light btn-sm review-btn">
+                                <a href="/restaurant/review/{{ restaurant.id }}">Review</a>
+                            </button>
+                        </div>
+                    </form>
+                    <h5 class="card-title"><a href="/restaurant/{{ restaurant.id }}">{{ restaurant.name }}</a></h5>
+                    <p class="card-text">{{ restaurant.cuisine }}</p>
+                    <p class="card-text">{{ restaurant.boro }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

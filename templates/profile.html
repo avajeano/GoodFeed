@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>{{ user.username }}</h2>
+    <div class="following-container">
+        <a href="/users/{{ user.id }}/following">Following {{ user.following|length }} | </a>
+        <a href="/users/{{ user.id }}/followers">Followers {{ user.followers|length}}</a>
+    </div>
+        <div class="col-sm-6">
+            <ul class="list-group">
+                
+                {% for review in reviews %}
+
+                <li class="list-group-item review-body">
+                    <div>
+                        <p><a href="/restaurant/{{ review.restaurant.id }}">{{ review.restaurant.name }}</a></p>
+                        <span class="text-muted">{{ review.timestamp.strftime('%d %B %Y') }}</span>
+                        <p>{{ review.text }}</p>
+
+                        {% if g.user and g.user.id == review.user.id %}
+                            <form method="POST" action="/review/{{ review.id }}/delete">
+                                <button class="btn btn-outline-danger btn-sm review-delete-btn">Delete</button>
+                            </form>
+                        {% endif %}
+
+                    </div>
+                </li>
+
+                {% endfor %}
+
+            </ul>
+        </div>
+</div>
+{% endblock %}

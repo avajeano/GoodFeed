@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}User Search{% endblock %}
+{% block content %}
+    {% if users|length == 0 %}
+        <h3>No users found.</h3>
+    {% else %}
+        <div class="container">
+            <form class="navbar-form navbar-right" action="/users">
+                <input name="q" class="form-control" placeholder="Find friends" id="search">
+                <button class="btn btn-default">
+                  <span class="fa fa-search"></span>
+                </button>
+              </form>
+            <div class="col-sm-6">
+                <ul class="list-group">
+                    {% for user in users %}
+                        <li class="list-group-item user-card">
+                            <div class="card-contents">
+                                <a href="/users/{{ user.id }}" class="card-link">
+                                    <p>@{{ user.username }}</p>
+                                </a>
+                                {% if user.id != g.user.id %}
+                                {% if user in g.user.following %}
+                                    <form method="POST" action="/users/unfollow/{{ user.id }}">
+                                        <button class="btn btn-outline-primary btn-sm follow-btn">Unfollow</button>
+                                    </form>
+                                {% else %}
+                                    <form method="POST" action="/users/follow/{{ user.id }}">
+                                        <button class="btn btn-outline-primary btn-sm follow-btn">Follow</button>
+                                    </form>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                        </li>
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

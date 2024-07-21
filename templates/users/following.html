@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Following{% endblock %}
+{% block content %}
+<div class="col-sm-6">
+    <div class="list-group">
+        {% for followed_user in user.following %}
+            <li class="list-group-item user-card">
+                <div class="card-contents">
+                    <a href="/users/{{ followed_user.id }}" class="card-link">
+                        <p>@{{ followed_user.username }}</p>
+                    </a>
+                    {% if followed_user in g.user.following %}
+                        <form method="POST" action="/users/unfollow/{{ followed_user.id }}">
+                            <button class="btn btn-outline-primary btn-sm follow-btn">Unfollow</button>
+                        </form>
+                    {% else %}
+                        <form method="POST" action="/users/follow/{{ followed_user.id }}">
+                            <button class="btn btn-outline-primary btn-sm follow-btn">Follow</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </li>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Explore{% endblock %}
+{% block content %}
+<div class="col-sm-6">
+    <ul class="list-group">
+        {% for cuisine in cuisines %}
+        <li class="list-group-item"><a href="/cuisine/{{ cuisine }}">{{ cuisine }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css">
+        <link rel="stylesheet" href="/static/style.css">
+
+        <title>{% block title %} {% endblock %}</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-light bg-primary justify-content-between">
+            <div class="container">
+                <ul class="nav navbar-nav flewxrow float-left">
+                    <p class="nav-item pr-3 text-light">New York City</p>
+                    <a href="/" class="navbar-brand text-light">GoodFeed</a>
+                </ul>
+                <ul class="nav navbar-nav flex-row float-right">
+                    <li class="nav-item">
+                        <a class="nav-link pr-3 text-light" href="/users"><i class="fa-solid fa-users"></i> Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pr-3 text-light" href="/explore"><i class="fa-solid fa-utensils"></i> Explore</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pr-3 text-light" href="/search"><i class="fa-solid fa-magnifying-glass"></i> Search</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav flex-row float-right">
+                    <!-- will only show the logout link if the user is logged in -->
+                    {% if g.user %}
+                    <li class="nav-item">
+                        <a class="nav-link pr-3 text-light" href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+                        <a class="nav-link pr-3 text-light" href="/users/{{ g.user.id }}"><i class="fa-solid fa-user"></i> Profile</a>
+                        <a class="nav-link pr-3 text-light" href="/users/bookmarks/{{ g.user.id }}"><i class="fa-solid fa-bookmark"></i> Bookmarks</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link pr-3 text-light" href="/login"><i class="fa-solid fa-right-from-bracket"></i> Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/register"><i class="fa-solid fa-user-plus"></i> Signup</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+        <main>
+            {% for category, message in get_flashed_messages(with_categories=True) %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+
+            {% block content %}{% endblock %}
+        </main>
+    </body>
+</html>
