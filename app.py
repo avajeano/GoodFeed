@@ -10,7 +10,7 @@ CURR_USER_KEY = "curr_user"
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///restaurants_app_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres.oxwnunovtdmsimsixlzu:PUL5m9#28STB!Gs@aws-0-us-west-1.pooler.supabase.com:6543/postgres"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
