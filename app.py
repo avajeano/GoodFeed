@@ -183,7 +183,7 @@ def show_following(user_id):
     """Show list of users that logged in user follows."""
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash("Access unauthorized! Please login.", "danger")
         return redirect("/")
     
     user = User.query.get_or_404(user_id)
@@ -194,7 +194,7 @@ def show_followers(user_id):
     """Show list of users followers."""
 
     if not g.user:
-        flash("Access unathorized", "danger")
+        flash("Access unathorized! Please login.", "danger")
         return redirect("/")
     
     user = User.query.get_or_404(user_id)
@@ -206,7 +206,7 @@ def add_follow(follow_id):
     """Logged in user adds a follow."""
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash("Access unauthorized! Please login.", "danger")
         return redirect("/")
     
     followed_user = User.query.get_or_404(follow_id)
@@ -219,7 +219,7 @@ def add_follow(follow_id):
 def unfollow(follow_id):
     """Logged in user removes a follow."""
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash("Access unauthorized! Please login.", "danger")
         return redirect("/")
     
     followed_user = User.query.get(follow_id)
@@ -248,7 +248,7 @@ def users_bookmarks(user_id):
     """Show restaurants that the user has liked."""
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash("Access unauthorized! Please login.", "danger")
         return redirect("/")
     
     user = User.query.get_or_404(user_id)
@@ -266,7 +266,7 @@ def bookmark_restaurnt():
     """Bookmark or unbookmark a restaurant."""
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash("Access unauthorized! Please login.", "danger")
         return redirect("/")
     
     print("route hit successfully")
@@ -330,7 +330,7 @@ def review_id_restaurant():
     """Make sure a restaurant has an id before it's reviewed."""
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash("Access unauthorized! Please login.", "danger")
         return redirect("/")
     
     # extract the restaurant data from the html form
@@ -373,7 +373,7 @@ def review_restaurant(restaurant_id):
     """Review a restaurant."""
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash("Access unauthorized! Please login.", "danger")
         return redirect("/")
 
     restaurant = Restaurant.query.get_or_404(restaurant_id)
@@ -408,13 +408,13 @@ def delete_review(review_id):
     """Delete a review."""
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash("Access unauthorized! Please login.", "danger")
         return redirect("/")
 
     review = Review.query.get(review_id)
 
     if review.user_id != g.user.id:
-        flash("Access unauthoroized.", "danger")
+        flash("Access unauthoroized! Please login.", "danger")
         return redirect("/")
 
     db.session.delete(review)
