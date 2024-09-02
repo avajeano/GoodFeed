@@ -31,7 +31,7 @@ GoodFeed is a website that allows users to explore restaurants in New York City.
     ![Screenshot 2024-07-30 at 10 33 16 PM](https://github.com/user-attachments/assets/07398e1f-073b-416e-b703-53cd36c54b6e)
 
 - Home page
-    - Renders 20 random restauratns
+    - Renders 20 random restaurants
  
 ## Entity Relationship Diagram
 
